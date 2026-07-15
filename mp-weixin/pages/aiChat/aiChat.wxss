@@ -1,0 +1,524 @@
+.ai-chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* ========== 顶部导航栏 ========== */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 88rpx;
+  padding: 0 30rpx;
+  background-color: #007AFF;
+  color: #ffffff;
+}
+
+.top-bar-left, .top-bar-right {
+  display: flex;
+  align-items: center;
+  width: 120rpx;
+}
+
+.top-bar-right {
+  justify-content: flex-end;
+}
+
+.session-icon {
+  font-size: 36rpx;
+  margin-right: 8rpx;
+}
+
+.session-text {
+  font-size: 28rpx;
+}
+
+.new-chat-icon {
+  font-size: 48rpx;
+  font-weight: 300;
+}
+
+.top-bar-title {
+  font-size: 32rpx;
+  font-weight: 500;
+}
+
+/* ========== 会话列表面板 ========== */
+.sessions-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 80%;
+  height: 100vh;
+  background-color: #ffffff;
+  z-index: 200;
+  box-shadow: 4rpx 0 20rpx rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+}
+
+.sessions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #e0e0e0;
+}
+
+.sessions-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #333333;
+}
+
+.sessions-close {
+  font-size: 36rpx;
+  color: #999999;
+  padding: 10rpx;
+}
+
+.sessions-list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.session-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.session-item.active {
+  background-color: #e8f4fd;
+}
+
+.session-item-title {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.session-item-del {
+  font-size: 24rpx;
+  color: #ff4444;
+  margin-left: 20rpx;
+  padding: 8rpx 16rpx;
+}
+
+.sessions-empty {
+  padding: 60rpx 30rpx;
+  text-align: center;
+  color: #999999;
+  font-size: 28rpx;
+}
+
+/* ========== 聊天内容区域 ========== */
+.chat-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20rpx;
+  padding-bottom: 20rpx;
+}
+
+.message-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.message-item {
+  display: flex;
+  margin-bottom: 30rpx;
+  align-items: flex-start;
+}
+
+.message-item.user {
+  flex-direction: row-reverse;
+}
+
+.message-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+}
+
+.message-bubble {
+  max-width: 65%;
+  padding: 20rpx;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.message-item.assistant .message-bubble {
+  background-color: #ffffff;
+  margin-left: 15rpx;
+  border-top-left-radius: 4rpx;
+}
+
+.message-item.user .message-bubble {
+  background-color: #007AFF;
+  color: #ffffff;
+  margin-right: 15rpx;
+  border-top-right-radius: 4rpx;
+}
+
+.recommendation-list {
+  margin-top: 20rpx;
+}
+
+.recommendation-list .type_item {
+  display: flex;
+  padding-top: 20rpx;
+}
+
+.recommendation-list .type_item .dish_img {
+  width: 172rpx;
+  margin: 0 30rpx;
+}
+
+.recommendation-list .type_item .dish_img .dish_img_url {
+  display: block;
+  width: 172rpx;
+  height: 172rpx;
+  border-radius: 8rpx;
+}
+
+.recommendation-list .type_item .dish_info {
+  position: relative;
+  flex: 1;
+}
+
+.recommendation-list .type_item .dish_info .dish_name {
+  font-size: 32rpx;
+  font-family: PingFangSC, PingFangSC-Semibold;
+  font-weight: 600;
+  color: #333333;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recommendation-list .type_item .dish_info .dish_label {
+  font-size: 22rpx;
+  line-height: 40rpx;
+  font-family: PingFangSC, PingFangSC-Regular;
+  font-weight: 400;
+  color: #666666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.recommendation-list .type_item .dish_info .dish_price {
+  height: 72rpx;
+  line-height: 72rpx;
+  font-size: 36rpx;
+  color: #e94e3c;
+  font-family: DIN, DIN-Medium;
+  font-weight: 500;
+  bottom: 0;
+  letter-spacing: -0.8px;
+}
+
+.recommendation-list .type_item .dish_info .dish_price .ico {
+  font-size: 24rpx;
+}
+
+.recommendation-list .type_item .dish_info .dish_active {
+  position: absolute;
+  right: 20rpx;
+  bottom: 0rpx;
+  display: flex;
+}
+
+.recommendation-list .type_item .dish_info .dish_active .dish_add,
+.recommendation-list .type_item .dish_info .dish_active .dish_red {
+  display: block;
+  width: 72rpx;
+  height: 72rpx;
+}
+
+.recommendation-list .type_item .dish_info .dish_active .dish_number {
+  padding: 0 10rpx;
+  line-height: 72rpx;
+  font-size: 30rpx;
+  font-family: PingFangSC, PingFangSC-Medium;
+  font-weight: 500;
+}
+
+/* ========== 输入区域 ========== */
+.input-area {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  background-color: #ffffff;
+  border-top: 2rpx solid #e0e0e0;
+}
+
+.message-input {
+  flex: 1;
+  height: 72rpx;
+  background-color: #f5f5f5;
+  border-radius: 36rpx;
+  padding: 0 30rpx;
+  font-size: 28rpx;
+}
+
+.send-btn {
+  margin-left: 20rpx;
+  padding: 15rpx 30rpx;
+  background-color: #007AFF;
+  color: #ffffff;
+  border-radius: 36rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+}
+
+/* ========== 底部购物车栏 ========== */
+.footer_order_buttom {
+  display: flex;
+  width: 100%;
+  height: 88rpx;
+  background: rgba(0, 0, 0, 0.9);
+  border-radius: 0;
+  box-shadow: 0px -2rpx 10rpx 0px rgba(0, 0, 0, 0.1);
+  padding: 0rpx 10rpx;
+  box-sizing: border-box;
+}
+
+.footer_order_buttom .order_number {
+  position: relative;
+  width: 120rpx;
+}
+
+.footer_order_buttom .order_number .order_number_icon {
+  position: absolute;
+  display: block;
+  width: 120rpx;
+  height: 118rpx;
+  left: 12rpx;
+  bottom: 0px;
+}
+
+.footer_order_buttom .order_number .order_dish_num {
+  position: absolute;
+  display: inline-block;
+  z-index: 9;
+  min-width: 12rpx;
+  height: 36rpx;
+  line-height: 36rpx;
+  padding: 0 12rpx;
+  left: 92rpx;
+  font-size: 24rpx;
+  top: -8rpx;
+  border-radius: 20rpx;
+  background-color: #e94e3c;
+  color: #fff;
+  font-weight: 500;
+}
+
+.footer_order_buttom .order_price {
+  flex: 1;
+  text-align: left;
+  color: #fff;
+  line-height: 88rpx;
+  padding-left: 34rpx;
+  box-sizing: border-box;
+  font-size: 36rpx;
+  font-family: DIN, DIN-Medium;
+  font-weight: 500;
+}
+
+.footer_order_buttom .order_price .ico {
+  font-size: 24rpx;
+}
+
+.footer_order_buttom .order_but {
+  background-color: #d8d8d8;
+  width: 204rpx;
+  height: 72rpx;
+  line-height: 72rpx;
+  border-radius: 72rpx;
+  color: #fff;
+  text-align: center;
+  margin-top: 8rpx;
+}
+
+.orderCar {
+  flex: 1;
+  display: flex;
+}
+
+.order_form .order_but {
+  font-family: PingFangSC, PingFangSC-Medium;
+  font-weight: 500;
+  color: #333333;
+  background: #ffc200;
+}
+
+/* ========== 购物车弹窗 ========== */
+.pop_mask {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.cart_pop {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 60vh;
+  background-color: #fff;
+  border-radius: 8rpx 8rpx 0 0;
+  padding: 20rpx 30rpx 30rpx 30rpx;
+  box-sizing: border-box;
+}
+
+.cart_pop .top_title {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: solid 1px #ebeef5;
+  padding-bottom: 20rpx;
+}
+
+.cart_pop .top_title .tit {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #20232a;
+}
+
+.cart_pop .top_title .clear {
+  color: #999999;
+  font-size: 28rpx;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  font-family: PingFangSC, PingFangSC-Regular;
+}
+
+.cart_pop .top_title .clear .clear_icon {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 8rpx;
+}
+
+.cart_pop .top_title .clear .clear-des {
+  height: 56rpx;
+  line-height: 56rpx;
+}
+
+.cart_pop .card_order_list {
+  background-color: #fff;
+  padding-top: 40rpx;
+  box-sizing: border-box;
+  height: calc(100% - 0rpx);
+  flex: 1;
+  position: relative;
+}
+
+.cart_pop .card_order_list .type_item {
+  display: flex;
+  margin-bottom: 40rpx;
+}
+
+.cart_pop .card_order_list .type_item .dish_img {
+  width: 128rpx;
+  margin-right: 30rpx;
+}
+
+.cart_pop .card_order_list .type_item .dish_img .dish_img_url {
+  display: block;
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 8rpx;
+}
+
+.cart_pop .card_order_list .type_item .dish_info {
+  position: relative;
+  flex: 1;
+  padding-bottom: 120rpx;
+  border-bottom: solid 1px #ebeef5;
+}
+
+.cart_pop .card_order_list .type_item .dish_info .dish_name {
+  font-size: 32rpx;
+  line-height: 40rpx;
+  color: #333333;
+  font-family: PingFangSC, PingFangSC-Semibold;
+  font-weight: 600;
+}
+
+.cart_pop .card_order_list .type_item .dish_info .dish_price {
+  font-size: 32rpx;
+  color: #e94e3c;
+  position: absolute;
+  bottom: 24rpx;
+}
+
+.cart_pop .card_order_list .type_item .dish_info .dish_price .ico {
+  font-size: 24rpx;
+}
+
+.cart_pop .card_order_list .type_item .dish_info .dish_active {
+  position: absolute;
+  right: 20rpx;
+  bottom: 20rpx;
+  display: flex;
+}
+
+.cart_pop .card_order_list .type_item .dish_info .dish_active .dish_add,
+.cart_pop .card_order_list .type_item .dish_info .dish_active .dish_red {
+  display: block;
+  width: 72rpx;
+  height: 72rpx;
+}
+
+.cart_pop .card_order_list .type_item .dish_info .dish_active .dish_number {
+  padding: 0 10rpx;
+  line-height: 72rpx;
+  font-size: 30rpx;
+  font-family: PingFangSC, PingFangSC-Medium;
+  font-weight: 500;
+}
+
+.cart_pop .card_order_list::before {
+  content: '';
+  position: absolute;
+  width: 100vw;
+  height: 120rpx;
+  z-index: 99;
+  background: linear-gradient(0deg, white 10%, rgba(255, 255, 255, 0));
+  bottom: 0px;
+  left: 0px;
+}
+
+.cart_pop .card_order_list .seize_seat {
+  width: 100%;
+  height: 120rpx;
+}
+
+.cart_pop .dish_dishFlavor {
+  position: absolute;
+  left: 0;
+  top: 40rpx;
+}

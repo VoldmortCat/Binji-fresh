@@ -1,0 +1,149 @@
+<view class="ai-chat-container">
+	<!-- 顶部导航栏 -->
+	<view class="top-bar">
+		<view class="top-bar-left" bindtap="toggleSessions">
+			<text class="session-icon">☰</text>
+			<text class="session-text">会话</text>
+		</view>
+		<view class="top-bar-title">AI 点餐助手</view>
+		<view class="top-bar-right" bindtap="newChat">
+			<text class="new-chat-icon">+</text>
+		</view>
+	</view>
+
+	<!-- 会话列表面板 -->
+	<view class="sessions-panel" wx:if="{{showSessions}}">
+		<view class="sessions-header">
+			<text class="sessions-title">历史会话</text>
+			<text class="sessions-close" bindtap="toggleSessions">✕</text>
+		</view>
+		<scroll-view class="sessions-list" scroll-y="true">
+			<view class="session-item {{currentSessionId === item.sessionId ? 'active' : ''}}"
+				  wx:for="{{sessions}}" wx:key="sessionId"
+				  data-session-id="{{item.sessionId}}" bindtap="switchSession">
+				<text class="session-item-title">{{item.content || '新对话'}}</text>
+				<text class="session-item-del" data-session-id="{{item.sessionId}}" catchtap="deleteSession">删除</text>
+			</view>
+			<view wx:if="{{sessions.length === 0}}" class="sessions-empty">
+				<text>暂无历史会话</text>
+			</view>
+		</scroll-view>
+	</view>
+
+	<!-- 聊天内容区域 -->
+	<view class="chat-content">
+		<view class="message-list">
+			<block wx:for="{{messageList}}" wx:key="id">
+				<view class="message-item {{item.role}}">
+					<view class="message-avatar">
+						<image wx:if="{{item.role === 'user'}}" class="avatar-img" src="../../static/user-avatar.png" mode="aspectFill"></image>
+						<image wx:else class="avatar-img" src="../../static/ai-avatar.png" mode="aspectFill"></image>
+					</view>
+					<view class="message-bubble">
+						<text>{{item.content}}</text>
+						<view wx:if="{{item.dishes && item.dishes.length > 0}}" class="recommendation-list">
+							<block wx:for="{{item.dishes}}" wx:key="id" wx:for-item="dish">
+								<view class="type_item">
+									<view class="dish_img">
+										<image class="dish_img_url" mode="aspectFill" src="{{dish.image}}" />
+									</view>
+									<view class="dish_info">
+										<view class="dish_name">{{dish.name}}</view>
+										<view class="dish_label">{{dish.description || dish.name}}</view>
+										<view class="dish_price">
+											<text class="ico">￥</text>{{dish.price}}
+										</view>
+										<view class="dish_active">
+											<block wx:if="{{dish.dishNumber >= 1}}">
+												<image class="dish_red" src="../../static/btn_red.png" mode="" data-dish-id="{{dish.id}}" data-dish-name="{{dish.name}}" bindtap="recommendSub" />
+											</block>
+											<block wx:if="{{dish.dishNumber > 0}}">
+												<text class="dish_number">{{dish.dishNumber}}</text>
+											</block>
+											<image class="dish_add" src="../../static/btn_add.png" mode="" data-dish-id="{{dish.id}}" data-dish-name="{{dish.name}}" bindtap="recommendAdd" />
+										</view>
+									</view>
+								</view>
+							</block>
+						</view>
+					</view>
+				</view>
+			</block>
+		</view>
+	</view>
+
+	<!-- 输入区域 -->
+	<view class="input-area">
+		<input class="message-input" placeholder="告诉 AI 你想吃什么..." value="{{inputValue}}" bindinput="onInput" confirm-type="send" bindconfirm="sendMessage"></input>
+		<view class="send-btn" bindtap="sendMessage">发送</view>
+	</view>
+
+	<!-- 底部购物车栏 -->
+	<block wx:if="{{orderDishNumber===0}}">
+		<view class="footer_order_buttom">
+			<view class="order_number">
+				<image class="order_number_icon" src="../../static/btn_waiter_nor.png" mode=""></image>
+			</view>
+			<view class="order_price">
+				<text class="ico">￥</text>
+				0
+			</view>
+			<view class="order_but">去结算</view>
+		</view>
+	</block>
+	<block wx:else>
+		<view class="footer_order_buttom order_form">
+			<view class="orderCar" bindtap="showCartDetail">
+				<view class="order_number">
+					<image class="order_number_icon" src="../../static/btn_waiter_sel.png" mode=""></image>
+					<view class="order_dish_num">{{orderDishNumber}}</view>
+				</view>
+				<view class="order_price">
+					<text class="ico">￥</text>
+					{{orderDishPrice}}
+				</view>
+			</view>
+			<view class="order_but" bindtap="goCheckout">去结算</view>
+		</view>
+	</block>
+	<view hidden="{{!openCartPopup}}" class="pop_mask" bindtap="hideCartPopup">
+		<view class="cart_pop" catchtap="">
+			<view class="top_title">
+				<view class="tit">购物车</view>
+				<view class="clear" bindtap="clearCart">
+					<image class="clear_icon" src="../../static/clear.png" mode=""></image>
+					<text class="clear-des">清空</text>
+				</view>
+			</view>
+			<scroll-view class="card_order_list" scroll-y="true">
+				<block wx:for="{{orderAndUserInfo}}" wx:for-item="item" wx:for-index="index" wx:key="index">
+					<view class="type_item">
+						<view class="dish_img">
+							<image class="dish_img_url" mode="aspectFill" src="{{item.image}}" />
+						</view>
+						<view class="dish_info">
+							<view class="dish_name">{{item.name}}</view>
+							<block wx:if="{{item.dishFlavor}}">
+								<view class="dish_dishFlavor">{{item.dishFlavor}}</view>
+							</block>
+							<view class="dish_price">
+								<text class="ico">￥</text>
+								{{item.amount}}
+							</view>
+							<view class="dish_active">
+								<block wx:if="{{item.number && item.number > 0}}">
+									<image class="dish_red" src="../../static/btn_red.png" mode="" data-index="{{index}}" bindtap="removeCartItem" />
+								</block>
+								<block wx:if="{{item.number && item.number > 0}}">
+									<text class="dish_number">{{item.number}}</text>
+								</block>
+								<image class="dish_add" src="../../static/btn_add.png" mode="" data-index="{{index}}" bindtap="addCartItem" />
+							</view>
+						</view>
+					</view>
+				</block>
+				<view class="seize_seat"></view>
+			</scroll-view>
+		</view>
+	</view>
+</view>
