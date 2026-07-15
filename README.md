@@ -36,8 +36,6 @@
 - JWT 双端鉴权（admin / user）
 - Redis 缓存商品列表、营业状态、热销商品
 - WebSocket 来单实时提醒
-- 阿里云 OSS 文件上传
-- 微信支付 V3 集成
 - Spring AI 集成 DeepSeek 大模型 + DashScope 文本嵌入
 - 定时任务：订单超时处理、热销商品刷新
 - Swagger/Knife4j API 文档
