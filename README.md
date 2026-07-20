@@ -7,7 +7,7 @@
 | 模块 | 目录 | 技术栈 | 说明 |
 |------|------|--------|------|
 | C 端小程序 | `mp-weixin/` | uni-app + 微信小程序原生 | 消费者选购前端，覆盖商品浏览、加购下单、在线支付、订单追踪全流程 |
-| 管理后台 | `project-sky-admin-vue-ts/` | Vue 2 + TypeScript + Element UI | 商家运营后台，支持商品/分类/套餐管理、订单处理、员工管理、数据报表 |
+| 管理后台 | `binji-admin/` | Vue 2 + TypeScript + Element UI | 商家运营后台，支持商品/分类/套餐管理、订单处理、员工管理、数据报表 |
 | 后端服务 | `binji-fresh/` | Spring Boot 3 + MyBatis + Redis + MySQL | 提供全部 API 接口，包含 admin 端和 user 端两套鉴权体系 |
 
 ## 主要功能
